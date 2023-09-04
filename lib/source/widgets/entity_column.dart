@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hexagram/source/utils/tools.dart';
+import '../utils/tools.dart';
 
 import 'entity_display.dart';
 import '../concepts/relatables.dart';

@@ -3,8 +3,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hexagram/source/utils/extensions.dart';
-import 'package:hexagram/source/widgets/entity_display.dart';
+import '../../utils/extensions.dart';
+import '../../widgets/entity_display.dart';
 import '../../concepts.dart';
 import '../../utils/tools.dart';
 import '../../utils/definitions.dart';

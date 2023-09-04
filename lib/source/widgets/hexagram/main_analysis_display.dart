@@ -3,10 +3,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hexagram/source/utils/extensions.dart';
-import 'package:hexagram/source/widgets/hexagram/changing_lines_display.dart';
-import 'package:hexagram/source/widgets/entity_column.dart';
-import 'package:hexagram/source/widgets/hexagram/hexagram_display.dart';
+import '../../utils/extensions.dart';
+import '../../widgets/hexagram/changing_lines_display.dart';
+import '../../widgets/entity_column.dart';
+import '../../widgets/hexagram/hexagram_display.dart';
 import '../../concepts/hexagrams.dart';
 import '../../concepts/agents.dart';
 import '../../concepts/stems.dart';
