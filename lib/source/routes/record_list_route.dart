@@ -12,9 +12,11 @@ class RecordListRoute extends StatefulWidget
 	const RecordListRoute({
 		super.key,
 		this.mainFont = const ["微软雅黑"],
+		this.useNumbering = false,
 	});
 
 	final List<String> mainFont;
+	final bool useNumbering;
 
 	@override
 	State<RecordListRoute> createState() => _RecordListRouteState();
@@ -25,6 +27,7 @@ class _RecordListRouteState extends State<RecordListRoute>
 	List<({String uid, BriefHexagramRecord record})> records = [];
 	Map<String, BriefHexagramRecord> catalog = {};
 	late File catalogFile;
+	late bool useNumbering;
 	String path = "";
 
 	void Function() Function(HexagramRecord) getSaveAction(String uid)
@@ -60,7 +63,7 @@ class _RecordListRouteState extends State<RecordListRoute>
 					prompt, 
 					textAlign: TextAlign.center,
 					style: TextStyle(fontFamilyFallback: widget.mainFont),
-				)));
+				), duration: Duration(milliseconds: 1500)));
 		}
 	}
 
@@ -77,6 +80,7 @@ class _RecordListRouteState extends State<RecordListRoute>
 	@override
 	void initState()
 	{
+		useNumbering = widget.useNumbering;
 		initCatalog();
 		super.initState();
 	}
@@ -98,6 +102,7 @@ class _RecordListRouteState extends State<RecordListRoute>
 				{
 					return HexagramAnalysisRoute(
 						edit: edit,
+						edited: edit,
 						saveAction: getSaveAction(uid),
 						hexagram: record.hexagram,
 						changingLines: record.changingLines,
@@ -130,7 +135,17 @@ class _RecordListRouteState extends State<RecordListRoute>
 					textAlign: TextAlign.center,
 				),
 				actions: [
-					// TODO: maybe there are some useful functions to add
+					IconButton(
+						onPressed: ()
+						{
+							setState(() {
+								useNumbering ^= true;
+							});
+						}, 
+						icon: useNumbering
+							? Icon(Icons.format_list_bulleted)
+							: Icon(Icons.format_list_numbered),
+					)
 				],
 			),
 			floatingActionButton: FloatingActionButton(
@@ -152,17 +167,21 @@ class _RecordListRouteState extends State<RecordListRoute>
 				builder: (context, constraints)
 				{
 					double width = min(1000, constraints.maxWidth);
-					return Center(child:SizedBox(
+					return Center(child: SizedBox(
 						height: double.infinity,
 						width: width,
 						child: ListView.separated(
-							itemCount: records.length,
+							itemCount: records.length + 1,
 							separatorBuilder: (context, index)
 							{
-								return Divider(color: Colors.grey, height: 0);
+								return Divider(color: Colors.grey, height: 1);
 							},
 							itemBuilder: (context, index)
 							{
+								if (index == records.length)
+								{
+									return Container();
+								}
 								return SizedBox(
 									width: double.infinity,
 									height: 100,
@@ -211,15 +230,37 @@ class _RecordListRouteState extends State<RecordListRoute>
 											{
 												redirect(records[index].uid);
 											},
-											child: Container(
-												decoration: BoxDecoration(
-													color: Color(0x00000000),
-												),
-												child: BriefHexagramRecordCard(
-													record: records[index].record,
-													mainFont: widget.mainFont,
-												),
-											),
+											child: Stack(
+												fit: StackFit.expand,
+												alignment: Alignment.center,
+												children: [
+													if (useNumbering)
+													Positioned(
+														right: 5,
+														bottom: 5,
+														child: Padding(
+															padding: EdgeInsets.all(0),
+															child: Text(
+																"${index+1}", 
+																style: TextStyle(
+																	color: Theme.of(context).primaryColor.withOpacity(.25),
+																	fontSize: 40,
+																	fontFamilyFallback: widget.mainFont
+																),
+															),
+														),
+													),
+													Container(
+														decoration: BoxDecoration(
+															color: Color(0x00000000),
+														),
+														child: BriefHexagramRecordCard(
+															record: records[index].record,
+															mainFont: widget.mainFont,
+														),
+													),
+												],
+											)
 										),
 									),
 								);

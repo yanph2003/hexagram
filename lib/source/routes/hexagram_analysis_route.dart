@@ -20,6 +20,7 @@ class HexagramAnalysisRoute extends StatefulWidget
 	const HexagramAnalysisRoute({
 		super.key,
 
+		this.edited = true,
 		this.edit = true,
 		this.comment = false,
 		this.saveAction,
@@ -40,16 +41,16 @@ class HexagramAnalysisRoute extends StatefulWidget
 			null: Colors.black,
 		},
 		this.fontSet = const {
-			true: ["Simsun"],
-			false: ["Simhei"],
-			null: ["Simhei"],
+			true: ["SourceHanSerifSC"],
+			false: ["SourceHanSansSC"],
+			null: ["微软雅黑"],
 		},
 		this.themeColor = Colors.black,
 		this.antiThemeColor = Colors.white,
 		this.activatedColor = const Color(0x30EEEEEE),
 		this.highlightColor,
 		this.mainFont = const ["微软雅黑"],
-		this.nameFont = const ["楷体"],
+		this.nameFont = const ["SimKai"],
 
 		this.analysisColumns = const {
 			MainAnalysisColumnType.relations,
@@ -67,6 +68,7 @@ class HexagramAnalysisRoute extends StatefulWidget
 	});
 
 	final bool edit;
+	final bool edited;
 	final bool comment;
 	final void Function() Function(HexagramRecord)? saveAction;
 
@@ -99,6 +101,7 @@ class HexagramAnalysisRoute extends StatefulWidget
 class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 {
 	late bool edit;
+	late bool edited;
 	late bool comment;
 
 	late Hexagram hexagram;
@@ -118,6 +121,7 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 	void initState()
 	{
 		edit = widget.edit;
+		edited = widget.edited;
 		comment = widget.comment;
 
 		hexagram = widget.hexagram;
@@ -291,7 +295,7 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 									activatedColor: widget.activatedColor,
 									backgroundColor: widget.themeColor,
 									iconColor: widget.antiThemeColor,
-									iconFont: widget.mainFont,
+									iconFont: widget.nameFont,
 									selected: stems[index],
 									selectedColor: widget.themeColor.lighten(60),
 									circleButton: widget.editorRoundButton,
@@ -359,7 +363,7 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 									activatedColor: widget.activatedColor,
 									backgroundColor: widget.themeColor,
 									iconColor: widget.antiThemeColor,
-									iconFont: widget.mainFont,
+									iconFont: widget.nameFont,
 									selected: branches[index],
 									selectedColor: widget.themeColor.lighten(60),
 									circleButton: widget.editorRoundButton,
@@ -506,7 +510,62 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 												}
 											});
 										},
-									)
+									),
+									IconButton(
+										icon: Icon(Icons.save, color: widget.antiThemeColor),
+										onPressed: ()
+										{
+											setState(() {
+												edit = false;
+												if (branches.length < 3 || branches[1] == null || branches[2] == null)
+												{
+													edit = true;
+												}
+												if (widget.infoUseFullPillars)
+												{
+													if (branches.length < 4 || branches[0] == null || branches[3] == null)
+													{
+														edit = true;
+													}
+												}
+												if (widget.infoUseStems)
+												{
+													if (stems.length < 3 || stems[1] == null || stems[2] == null)
+													{
+														edit = true;
+													}
+													if (widget.infoUseFullPillars)
+													{
+														if (stems.length < 4 || stems[0] == null || stems[3] == null)
+														{
+															edit = true;
+														}
+													}
+												}
+												if (edit)
+												{
+													ScaffoldMessenger.of(context)
+														..removeCurrentSnackBar()
+														..showSnackBar(SnackBar(content: Text("缺少足够的干支信息，无法保存", style: TextStyle(fontFamilyFallback: widget.mainFont), textAlign: TextAlign.center), duration: Duration(milliseconds: 1500)));
+												}
+												else
+												{
+													edited = false;
+													(widget.saveAction ?? (x)=>(){})(
+														HexagramRecord(
+															problem: problem, 
+															hexagram: hexagram, 
+															changingLines: changingLines, 
+															stems: stems, 
+															branches: branches,
+															dateTime: dateTime,
+															// TODO: comment: [comment]
+														)
+													)();
+												}
+											});
+										},
+									),
 								],
 							),
 							body: Column(
@@ -695,19 +754,26 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 							appBar: AppBar(
 								title: Text("${branches[1]}月${branches[2]}日 $hexagram${changingLines.isEmpty ? '' : '之${hexagram.change(changingLines)}'}", style: TextStyle(fontFamilyFallback: widget.mainFont)),
 								actions: [
+									if (edited)
 									IconButton(
 										icon: Icon(Icons.save, color: widget.antiThemeColor),
-										onPressed: (widget.saveAction ?? (x)=>(){})(
-											HexagramRecord(
-												problem: problem, 
-												hexagram: hexagram, 
-												changingLines: changingLines, 
-												stems: stems, 
-												branches: branches,
-												dateTime: dateTime,
-												// TODO: comment: [comment]
-											)
-										),
+										onPressed: ()
+										{
+											(widget.saveAction ?? (x)=>(){})(
+												HexagramRecord(
+													problem: problem, 
+													hexagram: hexagram, 
+													changingLines: changingLines, 
+													stems: stems, 
+													branches: branches,
+													dateTime: dateTime,
+													// TODO: comment: [comment]
+												)
+											)();
+											setState(() {
+												edited = false;
+											});
+										},
 									),
 									IconButton(
 										icon: Icon(Icons.edit, color: widget.antiThemeColor),
@@ -715,6 +781,7 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 										{
 											setState(() {
 												edit = true;
+												edited = true;
 											});
 										},
 									)

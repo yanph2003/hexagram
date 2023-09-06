@@ -65,7 +65,7 @@ class BriefHexagramRecordCard extends StatelessWidget
 														child: SizedBox(
 															width: largerFontSize,
 															height: largerFontSize,
-															child: HexagramDisplay(hexagram: record.hexagram),
+															child: HexagramDisplay(hexagram: record.hexagram.change(record.changingLines)),
 														)
 													),
 													TextSpan(
@@ -76,6 +76,7 @@ class BriefHexagramRecordCard extends StatelessWidget
 											),
 										]
 									),
+									if (record.problem.isNotEmpty)
 									TextSpan(
 										text: "\n\n",
 										style: TextStyle(fontSize: fontSize * .5),
@@ -87,12 +88,14 @@ class BriefHexagramRecordCard extends StatelessWidget
 												Spacer(),
 												Expanded(
 													flex: 10,
-													child: Text(
-														record.problem, 
-														style: TextStyle(fontSize: fontSize, fontFamilyFallback: mainFont),
-														maxLines: 2,
-														overflow: TextOverflow.ellipsis,
-														textAlign: TextAlign.center,
+													child: Center(
+														child: Text(
+															record.problem, 
+															style: TextStyle(fontSize: fontSize, fontFamilyFallback: mainFont),
+															maxLines: 2,
+															overflow: TextOverflow.ellipsis,
+															// textAlign: TextAlign.center,
+														),
 													),
 												),
 												Spacer(),

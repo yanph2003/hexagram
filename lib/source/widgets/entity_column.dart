@@ -26,9 +26,9 @@ class EntityColumn extends StatelessWidget
 		},
 		Map<bool?, List<String>> fontSet = 
 		const {
-			true: ["Simsun"],
-			false: ["Simhei"],
-			null: ["Simhei"],
+			true: ["SourceHanSerifSC"],
+			false: ["SourceHanSansSC"],
+			null: ["SourceHanSansSC"],
 		},
 		bool withoutAgent = false,
 		Size relativeEntitySize = const Size(.8, .8),

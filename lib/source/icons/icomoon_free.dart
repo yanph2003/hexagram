@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class IconIcomoonFree
 {
-	static const String fontFamily = "icomoonFree";
+	static const String fontFamily = "IcomoonFree";
 	static const IconData thickArrowRight = IconData(
 		0xEA34, 
 		fontFamily: fontFamily, 

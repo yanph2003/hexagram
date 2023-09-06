@@ -9,7 +9,7 @@ class ObjectDisplay extends StatelessWidget
 		super.key, 
 		required obj, 
 		Color color = Colors.black,
-		List<String> fontSet = const ["Simhei"],
+		List<String> fontSet = const ["微软雅黑"],
 		double fontSize = 20,
 	}): _obj = obj, _color = color, _fontSet = fontSet, _fontSize = fontSize;
 
@@ -56,9 +56,9 @@ class RelatableDisplay extends StatelessWidget
 		},
 		Map<bool?, List<String>> fontSet = 
 		const {
-			true: ["Simsun"],
-			false: ["Simhei"],
-			null: ["Simhei"],
+			true: ["SourceHanSerifSC"],
+			false: ["SourceHanSansSC"],
+			null: ["微软雅黑"],
 		},
 		double fontSize = 20,
 	}): 
@@ -79,6 +79,7 @@ class RelatableDisplay extends StatelessWidget
 				? _fontSet[(_relatable as Precise).isYang]
 				: _fontSet[null],
 			fontSize: _fontSize,
+			// fontWeight: FontWeight.w700,
 		);
 		
 	@override
@@ -113,9 +114,9 @@ class EntityDisplay extends StatelessWidget
 		},
 		Map<bool?, List<String>> fontSet = 
 		const {
-			true: ["Simsun"],
-			false: ["Simhei"],
-			null: ["Simhei"],
+			true: ["SourceHanSerifSC"],
+			false: ["SourceHanSansSC"],
+			null: ["微软雅黑"],
 		},
 		double fontSize = 20,
 		bool withoutAgent = false,

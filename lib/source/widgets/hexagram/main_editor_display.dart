@@ -22,7 +22,7 @@ class MainEditorDisplay extends StatelessWidget
 		Color activatedColor = const Color(0x30EEEEEE),
 		Color themeColor = const Color(0xFF000000),
 		Color selectorIconColor = const Color(0xFFFFFFFF),
-		List<String> selectorIconFont = const ["楷体"],
+		List<String> selectorIconFont = const ["SimKai"],
 		Color selectedColor = const Color(0xFF7F7F7F),
 		TrigramSelectorIcon selectorIconType = TrigramSelectorIcon.name,
 		void Function()? Function(Trigram)? upperSelectorActions,

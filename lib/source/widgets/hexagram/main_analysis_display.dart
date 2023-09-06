@@ -67,11 +67,11 @@ class MainAnalysisDisplay extends StatelessWidget
 		},
 		Map<bool?, List<String>> entityFontSet = 
 		const {
-			true: ["Simsun"],
-			false: ["Simhei"],
-			null: ["Simhei"],
+			true: ["SourceHanSerifSC"],
+			false: ["SourceHanSansSC"],
+			null: ["微软雅黑"],
 		},
-		List<String> generationAndResponseFontSet = const ["楷体"],
+		List<String> generationAndResponseFontSet = const ["SimKai"],
 		Color activatedColor = const Color(0x30EEEEEE),
 		Color hexagramColor = Colors.black,
 		Color? highlightColor,

@@ -19,7 +19,7 @@ class TrigramSelector extends StatelessWidget
 		Color activatedColor = const Color(0x30EEEEEE),
 		Color backgroundColor = const Color(0xFF000000),
 		Color iconColor = const Color(0xFFFFFFFF),
-		List<String> iconFont = const ["Simhei"],
+		List<String> iconFont = const ["SourceHanSansSC"],
 		Trigram? selected,
 		Color selectedColor = const Color(0xFF7F7F7F),
 		TrigramSelectorIcon iconType = TrigramSelectorIcon.name,

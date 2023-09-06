@@ -1,7 +1,7 @@
-name: hexagram
-description: HEXAGRAM
+name: Hexagram
+description: A solution for hexagram and octochar.
 publish_to: 'none'
-version: 0.1.0
+version: 0.114.514
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -27,15 +27,51 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-  - family: changingLines
+  - family: ChangingLines
     fonts:
-      - asset: lib/iconfonts/changing_lines.ttf
-  - family: icomoonFree
+      - asset: lib/assets/iconfonts/changing_lines.ttf
+  - family: IcomoonFree
     fonts:
-      - asset: lib/iconfonts/icomoon_free.ttf
+      - asset: lib/assets/iconfonts/icomoon_free.ttf
+  # - family: SourceHanSerifSC
+  #   fonts: 
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-ExtraLight.otf
+  #       weight: 100
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-Light.otf
+  #       weight: 200
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-Regular.otf
+  #       weight: 400
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-Medium.otf
+  #       weight: 500
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-SemiBold.otf
+  #       weight: 600
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-Bold.otf
+  #       weight: 700
+  #     - asset: lib/assets/fonts/SourceHanSerifSC/SourceHanSerifSC-Heavy.otf
+  #       weight: 900
+  # - family: SourceHanSansSC
+  #   fonts: 
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-ExtraLight.otf
+  #       weight: 100
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-Light.otf
+  #       weight: 200
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-Normal.otf
+  #       weight: 300
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-Regular.otf
+  #       weight: 400
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-Medium.otf
+  #       weight: 500
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-Bold.otf
+  #       weight: 700
+  #     - asset: lib/assets/fonts/SourceHanSansSC/SourceHanSansSC-Heavy.otf
+  #       weight: 900
+  - family: SimKai
+    fonts:
+      - asset: lib/assets/fonts/SimKai.ttf
+      
 
 flutter_launcher_icons:
-  image_path: "assets/icon/icon_1024.png"
+  image_path: "lib/assets/icon/icon_1024.png"
   android: true
   ios: true
   web:
@@ -46,5 +82,5 @@ flutter_launcher_icons:
   macos:
     generate: true
 
-flutter_native_splash:
-  color: "#daf5ff"
+# flutter_native_splash:
+#   color: "#daf5ff"

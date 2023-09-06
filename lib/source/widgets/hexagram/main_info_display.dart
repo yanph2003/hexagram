@@ -49,14 +49,14 @@ class MainInfoDisplay extends StatelessWidget
 		},
 		Map<bool?, List<String>> fontSet = 
 		const {
-			true: ["Simsun"],
-			false: ["Simhei"],
-			null: ["Simhei"],
+			true: ["SourceHanSerifSC"],
+			false: ["SourceHanSansSC"],
+			null: ["微软雅黑"],
 		},
 		Color themeColor = Colors.black,
 		Color antiThemeColor = Colors.white,
 		List<String> mainFont = const ["微软雅黑"],
-		List<String> nameFont = const ["楷体"],
+		List<String> nameFont = const ["SimKai"],
 	
 		TextEditingController? problemController,
 		void Function(String)? problemEditAction,
@@ -572,12 +572,14 @@ class MainInfoDisplay extends StatelessWidget
 
 	TextSpan getDateTimeEditor(double fontSize, [bool test = false])
 	{
+		Map<bool?, List<String>> fontSet = Map.from(_fontSet);
+		fontSet[null] = fontSet[false]!;
 		TextSpan getSpanFrom(bool stem, int index)
 		{
 			return EntityDisplay(
 				entity: (stem ? _stems : _branches)[index] ?? (test ? "字" : "　"),
 				colorSet: _colorSet,
-				fontSet: _fontSet,
+				fontSet: test ? fontSet : _fontSet,
 				fontSize: fontSize,
 			).getTextSpan();
 		}
