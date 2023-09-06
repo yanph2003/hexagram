@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../json.dart';
 import '../widgets.dart';
 import '../concepts.dart';
 import '../utils.dart';
@@ -21,6 +22,7 @@ class HexagramAnalysisRoute extends StatefulWidget
 
 		this.edit = true,
 		this.comment = false,
+		this.saveAction,
 
 		this.hexagram = Hexagram.qianWeiTian,
 		this.changingLines = const {},
@@ -66,6 +68,7 @@ class HexagramAnalysisRoute extends StatefulWidget
 
 	final bool edit;
 	final bool comment;
+	final void Function() Function(HexagramRecord)? saveAction;
 
 	final Hexagram hexagram;
 	final Set<int> changingLines;
@@ -465,7 +468,7 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 								title: Text("编辑", style: TextStyle(fontFamilyFallback: widget.mainFont)),
 								actions: [
 									IconButton(
-										icon: Icon(Icons.save, color: widget.antiThemeColor),
+										icon: Icon(Icons.done, color: widget.antiThemeColor),
 										onPressed: ()
 										{
 											setState(() {
@@ -692,25 +695,19 @@ class _HexagramAnalysisRouteState extends State<HexagramAnalysisRoute>
 							appBar: AppBar(
 								title: Text("${branches[1]}月${branches[2]}日 $hexagram${changingLines.isEmpty ? '' : '之${hexagram.change(changingLines)}'}", style: TextStyle(fontFamilyFallback: widget.mainFont)),
 								actions: [
-									if (!comment)
 									IconButton(
-										icon: Icon(Icons.edit_note, color: widget.antiThemeColor),
-										onPressed: ()
-										{
-											setState(() {
-												comment = true;
-											});
-										},
-									),
-									if (comment)
-									IconButton(
-										icon: Icon(Icons.notes, color: widget.antiThemeColor),
-										onPressed: ()
-										{
-											setState(() {
-												comment = false;
-											});
-										},
+										icon: Icon(Icons.save, color: widget.antiThemeColor),
+										onPressed: (widget.saveAction ?? (x)=>(){})(
+											HexagramRecord(
+												problem: problem, 
+												hexagram: hexagram, 
+												changingLines: changingLines, 
+												stems: stems, 
+												branches: branches,
+												dateTime: dateTime,
+												// TODO: comment: [comment]
+											)
+										),
 									),
 									IconButton(
 										icon: Icon(Icons.edit, color: widget.antiThemeColor),
